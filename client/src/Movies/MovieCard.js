@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useRouteMatch, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
-const MovieCard = props => {
+const MovieCard = ( {movie: {title, director, metascore, stars, id}, movieWasEdited }) => {
   const [detailedCard, setDetailedCard] = useState(false)
-  const { title, director, metascore, stars, id } = props.movie;
-  const match = useRouteMatch(`/movies/:id`)
+  // const { title, director, metascore, stars, id } = props.movie;
   const history = useHistory()
 
   const detailCardHandler = () => {
@@ -16,7 +16,16 @@ const MovieCard = props => {
     }
   }
 
-  // console.log(history)
+  const handleDelete = async () => {
+    await axios
+      .delete(`http://localhost:5000/api/movies/${id}`)
+      .then(res => {
+        console.log(res)
+        movieWasEdited()
+      })
+      .catch(err => console.log(err))
+      history.push(`/`)
+  }
 
   useEffect(() => {
     detailCardHandler()
@@ -40,6 +49,7 @@ const MovieCard = props => {
         </div>
       ))}
       {detailedCard ? <button className="edit-button" onClick={() => history.push(`/update-movie/${id}`)}>Edit</button> : null}
+      {detailedCard ? <button className="delete-button" onClick={handleDelete}>Delete</button> : null}
     </div>
   );
 };

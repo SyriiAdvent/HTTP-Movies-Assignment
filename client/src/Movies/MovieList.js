@@ -1,16 +1,14 @@
 import React from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MovieCard from "./MovieCard";
 
-function MovieList({ movies }) {
-  const match = useRouteMatch(`/movies/:id`)
-
+function MovieList({ movies, movieWasEdited }) {
   return (
     <div className="movie-list">
       {
         movies.map(movie => (
           <Link key={movie.id} to={`/movies/${movie.id}`}>
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} movieWasEdited={movieWasEdited} />
           </Link>
         ))
       }
