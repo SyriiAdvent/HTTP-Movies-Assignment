@@ -1,35 +1,27 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import MovieList from './MovieList';
+import React, { useEffect, useState } from 'react';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 
 const MovieCard = props => {
-  const { id, title, director, metascore, stars } = props.movie;
-  const history = useHistory();
-  const [editMode, setEditMode] = useState(false)
-  const [editMovie, setEditMovie] = useState({
-    ...props.movie
-  })
+  const [detailedCard, setDetailedCard] = useState(false)
+  const { title, director, metascore, stars, id } = props.movie;
+  const match = useRouteMatch(`/movies/:id`)
+  const history = useHistory()
 
-  const handleChanges = e => {
-    setEditMovie({
-      ...editMovie,
-      [e.target.name]: e.target.value
-    })
+  const detailCardHandler = () => {
+    const card = `/movies/${id}`
+    if(card === history.location.pathname) {
+      setDetailedCard(true)
+    } else {
+      setDetailedCard(false)
+    }
   }
 
-  const updatedMovie = e => {
-    e.preventDefault()
-    axios
-      .put(`http://localhost:5000/api/movies/${id}`, editMovie)
-      .then(res => {
-        setEditMode(false)
-        console.log(res.data)
-        props.getMovieList()
-        history.push('/')
-      })
-      .catch(err => console.log(err.response));
-  }
+  // console.log(history)
+
+  useEffect(() => {
+    detailCardHandler()
+  }, [])
+
 
   return (
     <div className="movie-card">
@@ -47,14 +39,7 @@ const MovieCard = props => {
           {star}
         </div>
       ))}
-      <div className='edit-button' onClick={() => setEditMode(true)}>Edit</div>
-
-      {editMode ?
-      <form onSubmit={updatedMovie}>
-        <input name="title" value={editMovie.title} onChange={handleChanges} />
-        <button>Submit</button>
-      </form> : null}
-
+      {detailedCard ? <button className="edit-button" onClick={() => history.push(`/update-movie/${id}`)}>Edit</button> : null}
     </div>
   );
 };
