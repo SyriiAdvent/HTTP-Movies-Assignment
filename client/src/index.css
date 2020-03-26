@@ -11,9 +11,14 @@ body {
   box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, 0.12),
     0 2px 4px rgba(0, 0, 0, 0.24);
   padding: 1rem;
-  cursor: pointer;
+  cursor: initial;
   position: relative;
   margin: 1rem auto;
+}
+.movie-list a {
+  text-decoration: none;
+  color: black;
+  cursor: inherit;
 }
 
 .movie-director {
@@ -60,10 +65,40 @@ body {
   border: 1px solid grey;
   padding: 5px 10px;
   background-color: lightseagreen;
+  cursor: pointer;
 }
 .save-button:hover {
   background-color: green;
   color: white;
+}
+
+.edit-button {
+  position: absolute;
+  top: 60px;
+  right: 32px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+  cursor: pointer;
+}
+.edit-button:hover {
+  background-color: green;
+  color: white;
+}
+
+.delete-button {
+  position: absolute;
+  top: 210px;
+  right: 32px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  color: white;
+  background-color: rgb(172, 28, 9);
+  cursor: pointer;
+}
+.delete-button:hover {
+  background-color: white;
+  color: red;
 }
 
 .home-button {
@@ -71,7 +106,34 @@ body {
   background-color: lightskyblue;
 }
 
+.add-button {
+  padding: 5px 10px;
+  background-color: lightskyblue;
+}
+
 .movie-warning {
   color: red;
   text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container form label{
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
